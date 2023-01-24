@@ -1,0 +1,1 @@
+simple tic tac toe ai using miniMax algorithm. Use numbers 1-9 to set. Change static field "playsAsMin" to switch the starting player.
