@@ -27,13 +27,14 @@ public class TicTacToe {
 				System.out.println("Player " + (player ? "X" : "O") + " is about to set");
 
 				if (player) {
+					current = current.getChildWithValue();
+					field = current.copyField();
+					
+				}else{
 					final int[] indices = getInput();
 					field[indices[0]][indices[1]] = player ? 1 : 2;
 					current = current.children[indices[0]][indices[1]];
-					setTimeout(() -> System.out.println("test"), 1000);
-				}else{
-					current = current.getChildWithValue();
-					field = current.copyField();
+					
 				}
 	
 				printField();
@@ -156,16 +157,4 @@ public class TicTacToe {
 		return true;
 	}
 
-
-	public static void setTimeout(Runnable runnable, int delay){
-		new Thread(() -> {
-			try {
-				Thread.sleep(5000);
-				runnable.run();
-			}
-			catch (Exception e){
-				System.err.println(e);
-			}
-		}).start();
-	}
 }
