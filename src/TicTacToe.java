@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TicTacToe {
 	static int[][] field = new int[3][3];
@@ -12,6 +13,7 @@ public class TicTacToe {
 	 */
 	public static void main(final String[] args) {
 		clearField();
+
 		
 		ai = new Node(field, Node.playsAsMin);
 		ai.learn();
@@ -19,21 +21,21 @@ public class TicTacToe {
 		for (;;) {
 			Node current = ai;
 			boolean player = Node.playsAsMin;
-			System.out.println("TicTacToe - Use 1-9 to set a field!");
 			printField();
+
 			for (;;) {
 				System.out.println("Player " + (player ? "X" : "O") + " is about to set");
 
 				if (player) {
-					current = current.getPlayer2Node();
-					field = current.copyField();
-					
-				} else {
+					final int[] indices = getInput();
+					field[indices[0]][indices[1]] = player ? 1 : 2;
+					current = current.children[indices[0]][indices[1]];
+					setTimeout(() -> System.out.println("test"), 1000);
+				}else{
 					current = current.getChildWithValue();
 					field = current.copyField();
 				}
-
-
+	
 				printField();
 				if (hasWon()) {
 					System.out.println("Player " + (player ? "X" : "O") + " won!\n");
@@ -43,13 +45,12 @@ public class TicTacToe {
 				if (fieldFull()) {
 					System.out.println("It's a draw!\n");
 					System.exit(0);
+					break;
 
 				}
 				player = !player;
-
-			}
+			}	
 		}
-
 	}
 
 
@@ -113,6 +114,37 @@ public class TicTacToe {
 		return fieldFull(field);
 	}
 
+	private static int[] getInput() {
+		int value;
+		for (;;) {
+			try {
+				final ThreadLocalRandom random = ThreadLocalRandom.current();
+				value = Math.abs(random.nextInt(9)+1);
+			} catch (final Exception e) {
+				System.err.println(ERROR_MESSAGE);
+				continue;
+			}
+			value--;
+			if (value < 1 || value > 8) {
+				System.err.println(ERROR_MESSAGE);
+				continue;
+			}
+
+			final int row = 2 - value / 3;
+			final int col = value % 3;
+
+			if (field[row][col] != 0) {
+				System.err.println("Field is already set!");
+				continue;
+			}
+
+			return new int[] { row, col };
+
+		}
+
+	}
+
+
 	public static boolean fieldFull(int[][] field) {
 		for (int i = 0; i < field.length; i++) {
 			for (int j = 0; j < field.length; j++) {
@@ -124,4 +156,16 @@ public class TicTacToe {
 		return true;
 	}
 
+
+	public static void setTimeout(Runnable runnable, int delay){
+		new Thread(() -> {
+			try {
+				Thread.sleep(5000);
+				runnable.run();
+			}
+			catch (Exception e){
+				System.err.println(e);
+			}
+		}).start();
+	}
 }

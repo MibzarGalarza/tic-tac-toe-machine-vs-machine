@@ -64,16 +64,7 @@ public class Node {
 		return null;
 	}
 
-	public Node getPlayer2Node() {
 
-		for (int i = 0; i < children.length; i++) {
-			for (int j = 0; j < children[i].length; j++) {
-				if (children[i][j] != null && children[i][j].value == value) {
-					return children[i][j];
-				}
-			}
-		}
-		return null;
-	}
 
 }
+
