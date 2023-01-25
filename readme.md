@@ -1,1 +1,3 @@
-simple tic tac toe ai using miniMax algorithm. Use numbers 1-9 to set. Change static field "playsAsMin" to switch the starting player.
+Simple game of tic-tac-toe, i use the method minimax and i implement the thread class random number so the machine plays alone.
+
+thx.
