@@ -33,7 +33,7 @@ public class TicTacToe {
 
 				//The first player is the player X he feld depends the bucle and decide the number between 1-9
 				if (player) {
-					current = current.getChildWithValue();
+					current = current.getPlayerO();
 					field = current.copyField();
 					
 				}

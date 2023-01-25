@@ -1,17 +1,25 @@
 
 public class Node {
+
+	//Put a playAsmin a flag 
 	static boolean playsAsMin = false;
 
 	int[][] field = new int[3][3];
 	Node[][] children = new Node[3][3];
 
+	//Value is the variable return for the Player X
+
 	int value;
 	boolean isMin;
+
+	//here is when the program know if the one player field 3 spaces
 
 	public Node(int[][] field, boolean isMin) {
 		this.isMin = isMin;
 		this.field = field;
 	}
+
+	//Here is when the field is copy and print in the table
 
 	int[][] copyField() {
 		int[][] copied = new int[3][3];
@@ -52,7 +60,11 @@ public class Node {
 		return value;
 	}
 
-	public Node getChildWithValue() {
+	
+	//Here is when the player X get the number between 1-9 and return the number and export in the
+	//TicTacToe doc.
+
+	public Node getPlayerO() {
 
 		for (int i = 0; i < children.length; i++) {
 			for (int j = 0; j < children[i].length; j++) {
